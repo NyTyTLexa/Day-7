@@ -1,0 +1,90 @@
+﻿<Window x:Class="WpfApp1.SelectProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Список товаров" Height="550" Width="800" WindowStartupLocation="CenterScreen" MinHeight="550" MinWidth="800" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="400*"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.ColumnSpan="4" Background="#FF92D050"/>
+        <Border Grid.ColumnSpan="4" Grid.Row="8" Background="#FF92D050"/>
+        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal">
+        <TextBlock Text="ФИО" VerticalAlignment="Center" TextAlignment="Center" FontSize="20" Name="FIO"></TextBlock>
+            <Button Background="Transparent" BorderBrush="Transparent" Name="Back" Click="Back_Click" Content="↥" FontSize="20"/>
+            <TextBlock Name="CountList" FontSize="20"/>
+        </StackPanel>
+        <TextBlock Grid.Row="2" Grid.Column="1" FontSize="25" TextAlignment="Center" Text="Поиск:"></TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="25" VerticalAlignment="Center" TextAlignment="Center" Text="Функции:"></TextBlock>
+        <TextBox Grid.Row="2" Grid.Column="2" Margin="5" Name="SearchProduct" TextChanged="SearchProduct_TextChanged"/>
+        <TextBlock Grid.Column="3" Grid.Row="3" Text="Фильтрация по производителю " FontSize="20" VerticalAlignment="Center" TextAlignment="Center" />
+        <ComboBox Grid.Column="3" Grid.Row="4" FontSize="25" Margin="5" Name="FilterManufactory" SelectionChanged="FilterManufactory_SelectionChanged" />
+        <TextBlock Grid.Column="3" Grid.Row="5" Text="Сортировка по цене " FontSize="20" VerticalAlignment="Center" TextAlignment="Center" />
+        <ComboBox Grid.Column="3" Grid.Row="6" FontSize="25" Margin="5" SelectionChanged="SortPrice_SelectionChanged" Name="SortPrice" >
+            <ComboBoxItem Content="По убыванию"/>
+            <ComboBoxItem Content="По возрастанию"/>
+            <ComboBoxItem Content="Всё"/>
+        </ComboBox>
+        <StackPanel Orientation="Vertical" Name="AdminPanel" Grid.Row="7" Grid.Column="3" Visibility="Hidden">
+            <Button Name="Add"  Content="Добавить товар" Click="Add_Click" FontSize="25" Margin="5"/>
+            <Button Name="Edit" Content="Редактировать товар" Click="Edit_Click" FontSize="25" Margin="5"/>
+            <Button Name="Drop" Content="Удаление" Click="Drop_Click" FontSize="25" Margin="5"/>
+        </StackPanel>
+        <ListView Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Name="ListProduct" Grid.RowSpan="5">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="1" Source="{Binding PictureProduct}"/>
+                    <StackPanel Grid.Column="3" Orientation="Vertical">
+                        <TextBlock Text="{Binding ProductName}" FontSize="20" FontWeight="Bold"></TextBlock>
+                        <TextBlock Text="{Binding ProductDescription}" TextWrapping="Wrap" FontSize="20"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Производитель:" FontSize="20"/>
+                                <TextBlock Text="{Binding Manufacturer}" FontSize="20"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Цена:" FontSize="20"/>
+                                <TextBlock Text="{Binding ProductCost}" FontSize="20"/>
+                            </StackPanel>
+                        </StackPanel>
+                    <Border Grid.Column="5" Margin="0,20,0,20" Background="{Binding ColorProduct}" >
+                        <TextBlock Text="{Binding IsProduct}" FontSize="20"/>
+                    </Border>
+                </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ContentControl">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+        <TextBlock Name="SearchLabel" FontSize="25" Text="Нет результата поиска" Grid.Row="3" Visibility="Hidden" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="5"></TextBlock>
+    </Grid>
+</Window>
